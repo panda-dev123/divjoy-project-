@@ -1,3 +1,5 @@
+import axios from "axios";
+import React, { useState, useEffect } from 'react';
 import firebase from "./firebase";
 
 export async function apiRequest(path, method = "GET", data) {
@@ -33,4 +35,21 @@ export function CustomError(code, message) {
   const error = new Error(message);
   error.code = code;
   return error;
+}
+
+export function GetAnalysis() {
+
+  const [data, setData] = useState({ hits: [] });
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios(
+        'https://jsonplaceholder.typicode.com/users',
+      );
+ 
+      setData(result.data);
+    };
+ 
+    fetchData();
+  }, []);
+  return data;
 }

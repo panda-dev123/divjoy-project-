@@ -31,29 +31,19 @@ function NavbarCustom(props) {
         <Navbar.Collapse id="navbar-nav" className="justify-content-end">
           <Nav>
             {auth.user && (
-              <NavDropdown id="dropdown" title="Account" alignRight={true}>
-                <Link href="/dashboard" passHref>
-                  <NavDropdown.Item active={false}>Dashboard</NavDropdown.Item>
-                </Link>
-
-                <Link href="/settings/general" passHref>
-                  <NavDropdown.Item active={false}>Settings</NavDropdown.Item>
-                </Link>
-
-                <Dropdown.Divider></Dropdown.Divider>
-
+              <Nav.Item>
                 <Link href="/auth/signout" passHref>
-                  <NavDropdown.Item
+                  <Nav.Link
                     active={false}
                     onClick={(e) => {
                       e.preventDefault();
                       auth.signout();
                     }}
                   >
-                    Sign out
-                  </NavDropdown.Item>
+                    Logout
+                  </Nav.Link>
                 </Link>
-              </NavDropdown>
+              </Nav.Item>
             )}
 
             {!auth.user && (

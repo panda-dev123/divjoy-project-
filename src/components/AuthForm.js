@@ -5,18 +5,26 @@ import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import { useAuth } from "util/auth.js";
 import { useForm } from "react-hook-form";
+import "components/AuthSocial.scss";
+
 
 function AuthForm(props) {
   const auth = useAuth();
 
   const [pending, setPending] = useState(false);
+  const [isChecked, setChecked] = useState(false);
   const { handleSubmit, register, errors, getValues } = useForm();
 
   const submitHandlersByType = {
     signin: ({ email, pass }) => {
       return auth.signin(email, pass).then((user) => {
         // Call auth complete handler
+        if(!isChecked){
+          localStorage.clear();
+          localStorage.setItem("remember",1);
+        }
         props.onAuth(user);
+        
       });
     },
     signup: ({ email, pass }) => {
@@ -45,6 +53,9 @@ function AuthForm(props) {
     },
   };
 
+  const onChangeCheckbox = () =>{
+    setChecked(!isChecked)
+  }
   // Handle form submission
   const onSubmit = ({ email, pass }) => {
     // Show pending indicator
@@ -97,6 +108,14 @@ function AuthForm(props) {
               required: "Please enter a password",
             })}
           ></FormField>
+        </Form.Group>
+      )}
+
+
+      {["signin"].includes(props.type) && (
+        <Form.Group controlId="remember">
+          <input type="checkbox" checked={isChecked} name="lsRememberMe" onChange={onChangeCheckbox} className="rememberme" />
+          <label>Remember me</label>
         </Form.Group>
       )}
 
