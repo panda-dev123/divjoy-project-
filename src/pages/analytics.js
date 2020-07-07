@@ -10,7 +10,7 @@ const useAuth = () => {
 
   useEffect(() => {
     const unsub = firebase.auth().onAuthStateChanged((user) => {
-      user ? setUser(user) : setUser(null);
+      user ? setUser(user) : setUser("error");
     });
     return () => {
       unsub();
@@ -24,7 +24,7 @@ function AnalyticsPage(props) {
   const analysis = GetAnalysis();
   return (
     <div className="analysis">
-      {auth && analysis.length?
+      {auth !="error" && auth && analysis.length&&
         <div>
           <span className="text-primary col-lg-6">User email:</span>
           <span className="text-info col-lg-6">{auth.email}</span>
@@ -38,14 +38,18 @@ function AnalyticsPage(props) {
             </thead>
             <tbody>
               {
-                analysis.map(item =>
-                  <tr className="trow"> <td> {item.username}
-                  </td> <td> {item.name} </td><td> {item.email} </td>
+                analysis.map((item, index) =>
+                  <tr key={index} className="trow">
+                     <td> {item.username}</td> 
+                     <td> {item.name} </td>
+                     <td> {item.email} </td>
                   </tr>
                 )}
             </tbody>
           </table>
-        </div> :
+        </div>
+        }
+        {auth =="error" &&
         <Link href="/auth/signout" passHref>
           <div className="moredata">
             <button type="button" className="btn btn-outline-info">MORE DATA</button>
