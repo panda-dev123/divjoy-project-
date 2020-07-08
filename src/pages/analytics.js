@@ -24,7 +24,7 @@ function AnalyticsPage(props) {
   const analysis = GetAnalysis();
   return (
     <div className="analysis">
-      {auth !="error" && auth && analysis.length&&
+      {auth != "error" && auth && analysis.length &&
         <div>
           <span className="text-primary col-lg-6">User email:</span>
           <span className="text-info col-lg-6">{auth.email}</span>
@@ -40,21 +40,32 @@ function AnalyticsPage(props) {
               {
                 analysis.map((item, index) =>
                   <tr key={index} className="trow">
-                     <td> {item.username}</td> 
-                     <td> {item.name} </td>
-                     <td> {item.email} </td>
+                    <td> {item.username}</td>
+                    <td> {item.name} </td>
+                    <td> {item.email} </td>
                   </tr>
                 )}
             </tbody>
           </table>
         </div>
-        }
-        {auth =="error" &&
-        <Link href="/auth/signout" passHref>
-          <div className="moredata">
-            <button type="button" className="btn btn-outline-info">MORE DATA</button>
+      }
+      {auth == "error" &&
+        <>
+          <table className="table table-bordered">
+            <thead>
+              <tr>
+                <th>name</th>
+                <th>username</th>
+                <th>email</th>
+              </tr>
+            </thead>
+          </table>
+          <div className="mx-auto">
+            <Link href="/auth/signout" passHref>
+              MORE DATA
+            </Link>
           </div>
-        </Link>
+        </>
       }
     </div>
   );
