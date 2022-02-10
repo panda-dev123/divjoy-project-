@@ -16,7 +16,7 @@
     "firebase-admin": "8.12.1",
     "mailchimp-api-v3": "1.13.1",
     "next": "9.4.4",
-    "node-sass": "4.13.0",
+    "node-sass": "7.0.0",
     "query-string": "6.9.0",
     "raw-body": "^2.4.1",
     "react": "16.12.0",
